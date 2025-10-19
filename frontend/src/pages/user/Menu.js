@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
-import { Button, Modal, Form, Badge } from "react-bootstrap";
+import { Button, Form, Badge } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function Menu() {
@@ -10,6 +10,8 @@ function Menu() {
   const [cart, setCart] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
+  const email = localStorage.getItem("email");
 
   // 🔹 Kiểm tra token và tài khoản
   useEffect(() => {
@@ -80,6 +82,7 @@ function Menu() {
           name: product.name,
           price: product.price,
           quantity: 1,
+          note: "",
         },
       ]);
     }
@@ -116,9 +119,10 @@ function Menu() {
     }
 
     try {
-      // 🧩 1. Gửi đơn hàng
+      // 🧩 1. Gửi đơn hàng (THÊM EMAIL)
       await axiosClient.post("/api/orders", {
         tableNumber: selectedTable.tableNumber,
+        customerEmail: email,
         items: cart.map((c) => ({
           productId: c.productId,
           quantity: c.quantity,
@@ -126,7 +130,7 @@ function Menu() {
         })),
       });
 
-      // 🧩 2. Gọi API reserve bàn (không truyền email nữa)
+      // 🧩 2. Cập nhật trạng thái bàn (không cần email)
       await axiosClient.put(`/api/tables/reserve/${selectedTable.tableNumber}`);
 
       alert("✅ Đặt món thành công!");

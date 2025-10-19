@@ -10,6 +10,7 @@ import AdminLayout from "./components/AdminLayout";
 import Menu from "./pages/user/Menu";
 import ThankYou from "./pages/user/ThankYou";
 import MyOrder from "./pages/user/MyOrder";
+import OrderHistory from "./pages/user/OrderHistory"
 import NotFound from "./pages/user/Notfound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Users from "./pages/admin/Users";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/my-order" element={<MyOrder />} />
+        <Route path="/order-history" element={<OrderHistory />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

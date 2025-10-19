@@ -12,4 +12,5 @@ public interface OrderRepository extends MongoRepository<OrderEntity, String> {
     List<OrderEntity> findByStatus(String status);
     List<OrderEntity> findByCreatedAtBetween(Instant start, Instant end);
     Optional<OrderEntity> findByTableNumberAndStatusIn(int tableNumber, List<String> statuses);
+    List<OrderEntity> findByCustomerEmailOrderByCreatedAtDesc(String email);
 }

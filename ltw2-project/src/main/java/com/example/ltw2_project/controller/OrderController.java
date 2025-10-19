@@ -99,4 +99,11 @@ public class OrderController {
         order.setTotalPrice(total);
         return orderRepo.save(order);
     }
+
+    @GetMapping("/my-orders")
+    @PreAuthorize("hasRole('USER')")
+    public List<OrderEntity> getMyOrders(@RequestParam String email) {
+        return orderRepo.findByCustomerEmailOrderByCreatedAtDesc(email);
+    }
+
 }

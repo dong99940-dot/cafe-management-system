@@ -13,9 +13,9 @@ public class OrderEntity {
     private String id;
     private int tableNumber;
     private String customerEmail;
-    private List<OrderItem> items;     // Danh sách món
+    private List<OrderItem> items;     
     private double totalPrice;
-    private String status;             // NEW, COOKING, DONE
+    private String status;             
     private Instant createdAt;
 
     public OrderEntity() {}

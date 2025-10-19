@@ -49,6 +49,12 @@ function ThankYou() {
           <button className="btn btn-outline-danger" onClick={handleLogout}>
             🚪 Đăng xuất
           </button>
+          <button
+            className="btn btn-outline-primary me-2"
+            onClick={() => navigate("/order-history")}
+          >
+            📜 Xem lịch sử đặt bàn
+          </button>
         </div>
       </div>
     </div>
