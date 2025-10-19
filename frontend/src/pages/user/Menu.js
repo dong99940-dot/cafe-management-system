@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 function Menu() {
   const [tables, setTables] = useState([]);
   const [products, setProducts] = useState([]);
+  const [bestSellers, setBestSellers] = useState([]); // 🔥 danh sách món bán chạy
   const [selectedTable, setSelectedTable] = useState(null);
   const [cart, setCart] = useState([]);
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const email = localStorage.getItem("email");
@@ -20,9 +20,7 @@ function Menu() {
         await axiosClient.get("/auth/me");
       } catch (err) {
         if (err.response?.status === 403) {
-          alert(
-            "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên."
-          );
+          alert("Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.");
         }
         localStorage.clear();
         navigate("/login");
@@ -49,15 +47,17 @@ function Menu() {
     checkMyActiveTable();
   }, [navigate]);
 
-  // 🔹 Lấy bàn trống + menu
+  // 🔹 Lấy bàn trống + menu + best seller
   const fetchData = async () => {
     try {
-      const [t, p] = await Promise.all([
+      const [t, p, b] = await Promise.all([
         axiosClient.get("/api/tables/available"),
         axiosClient.get("/api/products"),
+        axiosClient.get("/api/reports/top-products?limit=8"),
       ]);
       setTables(t.data);
       setProducts(p.data);
+      setBestSellers(b.data);
     } catch (err) {
       console.error("Lỗi khi tải dữ liệu:", err);
     }
@@ -119,7 +119,6 @@ function Menu() {
     }
 
     try {
-      // 🧩 1. Gửi đơn hàng (THÊM EMAIL)
       await axiosClient.post("/api/orders", {
         tableNumber: selectedTable.tableNumber,
         customerEmail: email,
@@ -130,13 +129,11 @@ function Menu() {
         })),
       });
 
-      // 🧩 2. Cập nhật trạng thái bàn (không cần email)
       await axiosClient.put(`/api/tables/reserve/${selectedTable.tableNumber}`);
 
       alert("✅ Đặt món thành công!");
       setCart([]);
       setSelectedTable(null);
-      setShowModal(false);
       navigate(`/thank-you?table=${selectedTable.tableNumber}`);
     } catch (err) {
       const msg =
@@ -178,6 +175,71 @@ function Menu() {
             )}
           </div>
         </>
+      )}
+
+      {/* 🔥 Món bán chạy nhất */}
+      {bestSellers.length > 0 && (
+        <div className="mb-5">
+          <h4 className="fw-bold mb-3">🔥 Món bán chạy nhất</h4>
+          <div
+            style={{
+              display: "flex",
+              overflowX: "auto",
+              gap: "1rem",
+              paddingBottom: "0.5rem",
+              scrollBehavior: "smooth",
+            }}
+          >
+            {bestSellers.map((p, idx) => (
+              <div
+                key={idx}
+                className="card text-center shadow-sm flex-shrink-0"
+                style={{
+                  width: "150px",
+                  minWidth: "150px",
+                  border: "1px solid #eee",
+                  borderRadius: "10px",
+                  position: "relative",
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "8px",
+                    right: "8px",
+                    background: "#ff4757",
+                    color: "white",
+                    fontSize: "0.7rem",
+                    padding: "2px 6px",
+                    borderRadius: "5px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  ★ Best
+                </span>
+
+                <img
+                  src={p.imageUrl || "https://via.placeholder.com/100"}
+                  alt={p.name}
+                  className="card-img-top"
+                  style={{
+                    height: "100px",
+                    objectFit: "cover",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                  }}
+                />
+                <div className="card-body p-2">
+                  <h6 className="fw-bold text-truncate">{p.name}</h6>
+                  <p className="text-success mb-1">
+                    {p.price.toLocaleString()} ₫
+                  </p>
+                  <small className="text-muted">{p.sold} lượt bán</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {/* Menu */}

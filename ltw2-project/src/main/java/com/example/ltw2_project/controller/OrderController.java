@@ -32,6 +32,7 @@ public class OrderController {
                     .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm: " + item.getProductId()));
             item.setName(p.getName());
             item.setPrice(p.getPrice());
+            item.setImageUrl(p.getImageUrl());
             total += p.getPrice() * item.getQuantity();
         }
         order.setTotalPrice(total);
