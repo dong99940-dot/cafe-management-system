@@ -1,27 +1,26 @@
-version: "3.9"
-
 services:
   frontend:
     build: ./frontend
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      - ltw2_project
+    networks:
+      - ltw2_net
 
-  backend:
-    build: ./backend
+  ltw2_project:
+    build: ./ltw2-project
     ports:
-      - "8080:8080"
-    depends_on:
-      - mongodb
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://tranquocdong102:uIFYTUJ9naAOZEKe@cluster0.s51on.mongodb.net/ltw2_project
+      - SPRING_DATA_MONGODB_DATABASE=ltw2_project
+      - JWT_SECRET=yN4xQfT8gV1aR9pK2zXbM6wJ0cH5uE3L
+      - ROOT_EMAIL=root@ltw2.local
+      - ROOT_PASSWORD=root123        
+    networks:
+      - ltw2_net
 
-  mongodb:
-    image: mongo:6.0
-    container_name: mongo_db
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
-volumes:
-  mongo_data:
+networks:
+  ltw2_net:
+    driver: bridge

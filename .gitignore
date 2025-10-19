@@ -1,3 +1,25 @@
-node_modules/
+# Java / Spring Boot
 target/
+*.class
+*.jar
+*.war
+*.log
+
+# IntelliJ / Eclipse
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Node / React
+node_modules/
+build/
+dist/
 .env
+npm-debug.log*
+
+# System
+.DS_Store
+Thumbs.db
