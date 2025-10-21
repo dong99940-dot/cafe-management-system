@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
-import { Card, Badge } from "react-bootstrap";
+import { Card, Badge, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function OrderHistory() {
   const [orders, setOrders] = useState([]);
   const email = localStorage.getItem("email");
+  const navigate = useNavigate();
+  const [activeTable, setActiveTable] = useState(null);
 
+  // 🔹 Kiểm tra user có bàn đang phục vụ không
+  useEffect(() => {
+    const checkActiveTable = async () => {
+      try {
+        const res = await axiosClient.get("/api/tables/my-active");
+        if (res.data && res.data.tableNumber) {
+          setActiveTable(res.data.tableNumber);
+        }
+      } catch (err) {
+        console.warn("Không có bàn đang phục vụ hoặc lỗi khi kiểm tra:", err);
+      }
+    };
+    checkActiveTable();
+  }, []);
+
+  // 🔹 Lấy lịch sử đơn hàng
   useEffect(() => {
     if (!email) return;
     axiosClient
@@ -14,9 +33,36 @@ function OrderHistory() {
       .catch((err) => console.error("Lỗi khi tải lịch sử đơn hàng:", err));
   }, [email]);
 
+  // 🔹 Điều hướng đến bàn đang phục vụ
+  const handleViewCurrentOrder = () => {
+    if (activeTable) {
+      navigate(`/my-order?table=${activeTable}`);
+    } else {
+      alert("Bạn hiện không có bàn nào đang phục vụ.");
+    }
+  };
+
+  // 🔹 Đăng xuất
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
     <div className="container py-4">
-      <h2 className="fw-bold text-center mb-4">📜 Lịch sử đặt bàn của bạn</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="fw-bold">📜 Lịch sử đặt bàn của bạn</h2>
+        <div className="d-flex gap-2">
+          <Button variant="outline-primary" onClick={handleViewCurrentOrder}>
+            🪑 Đơn hàng hiện tại
+          </Button>
+          <Button variant="outline-danger" onClick={handleLogout}>
+            🚪 Đăng xuất
+          </Button>
+        </div>
+      </div>
 
       {orders.length === 0 ? (
         <p className="text-center text-muted">Bạn chưa có đơn hàng nào.</p>
@@ -56,7 +102,9 @@ function OrderHistory() {
               </p>
 
               <details>
-                <summary className="fw-bold text-primary">Xem chi tiết món</summary>
+                <summary className="fw-bold text-primary">
+                  Xem chi tiết món
+                </summary>
                 <ul className="mt-2">
                   {order.items.map((item, idx) => (
                     <li key={idx}>

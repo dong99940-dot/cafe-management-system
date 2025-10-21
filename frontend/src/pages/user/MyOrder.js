@@ -62,7 +62,6 @@ function MyOrder() {
     }
   };
 
-
   if (loading) return <p className="text-center mt-5">Đang tải đơn hàng...</p>;
 
   return (
@@ -126,10 +125,16 @@ function MyOrder() {
             </div>
           )}
 
-          {/* ✅ Nút quay lại menu */}
-          <div className="text-center mt-4">
+          {/* ✅ Các nút điều hướng */}
+          <div className="mt-4 d-flex flex-column gap-2">
+            <button
+              className="btn btn-outline-primary"
+              onClick={() => navigate("/order-history")}
+            >
+              📜 Xem lịch sử đặt bàn
+            </button>
             <button className="btn btn-outline-danger" onClick={handleLogout}>
-                🚪 Đăng xuất
+              🚪 Đăng xuất
             </button>
           </div>
         </>

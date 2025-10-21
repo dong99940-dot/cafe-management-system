@@ -6,6 +6,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Products from "./pages/admin/Products";
 import Tables from "./pages/admin/Tables";
 import Orders from "./pages/admin/Orders";
+import Feedbacks from "./pages/admin/Feedbacks";
 import AdminLayout from "./components/AdminLayout";
 import Menu from "./pages/user/Menu";
 import ThankYou from "./pages/user/ThankYou";
@@ -36,6 +37,7 @@ function App() {
           <Route path="tables" element={<Tables />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
+          <Route path="feedbacks" element={<Feedbacks />} />
         </Route>
 
         {/* User pages */}

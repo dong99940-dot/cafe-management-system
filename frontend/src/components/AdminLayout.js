@@ -40,6 +40,11 @@ function AdminLayout() {
               👥 Người dùng
             </Link>
           </li>
+          <li className="nav-item mb-2">
+            <Link className="nav-link text-white" to="/admin/feedbacks">
+              💬 Feedback
+            </Link>
+          </li>
           <li className="nav-item mt-4">
             <button className="btn btn-outline-light w-100" onClick={logout}>
               Đăng xuất
