@@ -5,7 +5,6 @@ import com.example.ltw2_project.model.Role;
 import com.example.ltw2_project.model.User;
 import com.example.ltw2_project.repository.UserRepository;
 import com.example.ltw2_project.security.JwtUtil;
-import com.example.ltw2_project.service.PasswordResetService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,31 +21,11 @@ public class AuthController {
     private final UserRepository userRepo;
     private final PasswordEncoder encoder;
     private final JwtUtil jwt;
-    private final PasswordResetService passwordResetService;
 
-    public AuthController(UserRepository userRepo, PasswordEncoder encoder, JwtUtil jwt,
-                          PasswordResetService passwordResetService) {
+    public AuthController(UserRepository userRepo, PasswordEncoder encoder, JwtUtil jwt) {
         this.userRepo = userRepo;
         this.encoder = encoder;
         this.jwt = jwt;
-        this.passwordResetService = passwordResetService;
-    }
-
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody @Valid ForgotPasswordRequest req) {
-        passwordResetService.initiatePasswordReset(req.getEmail());
-        return ResponseEntity.ok(Map.of("message", "Nếu email tồn tại, liên kết đặt lại mật khẩu đã được gửi"));
-    }
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody @Valid ResetPasswordRequest req) {
-        try {
-            passwordResetService.resetPassword(req.getToken(), req.getNewPassword());
-            return ResponseEntity.ok(Map.of("message", "Đặt lại mật khẩu thành công"));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", ex.getMessage()));
-        }
     }
 
     // ✅ Đăng ký user mới

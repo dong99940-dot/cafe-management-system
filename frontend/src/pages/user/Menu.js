@@ -313,7 +313,7 @@ function Menu() {
                           <Button
                             variant="outline-secondary"
                             size="sm"
-                            onClick={() => addToCart(item)}
+                            onClick={() => addToCart(products.find(p => p.id === item.productId))}
                           >
                             +
                           </Button>

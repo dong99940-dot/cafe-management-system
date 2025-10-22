@@ -67,16 +67,6 @@ function Login() {
             />
           </div>
 
-          <div className="d-flex justify-content-end mb-3">
-            <span
-              className="text-primary small fw-bold"
-              role="button"
-              onClick={() => navigate("/forgot-password")}
-            >
-              Quên mật khẩu?
-            </span>
-          </div>
-
           {error && (
             <div className="alert alert-danger py-2 text-center small mb-3">
               {error}
