@@ -11,10 +11,8 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(""); // reset lỗi cũ
-
     try {
       const res = await axiosClient.post("/auth/login", { email, password });
-
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
@@ -43,7 +41,6 @@ function Login() {
     <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
       <div className="card shadow p-4" style={{ width: "360px" }}>
         <h3 className="text-center mb-3 fw-bold">Đăng nhập</h3>
-
         <form onSubmit={handleLogin}>
           <div className="mb-3">
             <input
@@ -55,7 +52,6 @@ function Login() {
               required
             />
           </div>
-
           <div className="mb-3">
             <input
               type="password"
@@ -66,24 +62,37 @@ function Login() {
               required
             />
           </div>
+          
+          {/* Liên kết Quên mật khẩu mới được thêm */}
+          <div className="text-end mb-3">
+            <span
+              className="text-muted small"
+              role="button"
+              onClick={() => navigate("/forgot-password")}
+              style={{ cursor: 'pointer' }}
+            >
+              Quên mật khẩu?
+            </span>
+          </div>
+          {/* Kết thúc liên kết Quên mật khẩu */}
 
           {error && (
             <div className="alert alert-danger py-2 text-center small mb-3">
               {error}
             </div>
           )}
-
           <button type="submit" className="btn btn-primary w-100">
             Đăng nhập
           </button>
         </form>
-
+        
         <p className="text-center small mt-3">
           Chưa có tài khoản?{" "}
           <span
             className="text-primary fw-bold"
             role="button"
             onClick={() => navigate("/register")}
+            style={{ cursor: 'pointer' }}
           >
             Đăng ký
           </span>
