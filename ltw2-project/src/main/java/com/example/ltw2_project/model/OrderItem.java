@@ -20,7 +20,6 @@ public class OrderItem {
         this.imageUrl = imageUrl;
     }
 
-    // Getters & Setters
     public String getProductId() {
         return productId;
     }

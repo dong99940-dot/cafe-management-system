@@ -37,7 +37,6 @@ public class PasswordResetController {
         this.emailService = emailService;
     }
 
-    // 🔹 1. Gửi link reset qua email
     @PostMapping("/forgot-password")
     public Map<String, String> forgotPassword(@RequestBody Map<String, String> req) {
         String email = req.get("email");
@@ -57,7 +56,6 @@ public class PasswordResetController {
         return Map.of("message", "Link đặt lại mật khẩu đã được gửi đến email của bạn");
     }
 
-    // 🔹 2. Xác thực token
     @GetMapping("/validate-reset-token")
     public Map<String, Object> validateToken(@RequestParam String token) {
         PasswordResetToken resetToken = tokenRepo.findByToken(token)
@@ -68,7 +66,6 @@ public class PasswordResetController {
         return Map.of("valid", true, "email", resetToken.getEmail());
     }
 
-    // 🔹 3. Đặt lại mật khẩu
     @PostMapping("/reset-password")
     public Map<String, String> resetPassword(@RequestBody Map<String, String> req) {
         String token = req.get("token");

@@ -32,9 +32,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                 u.getEmail(),
                 u.getPasswordHash(),
                 u.isActive(), 
-                true,          
-                true,          
-                true,          
+                true,          // tài khoản chưa hết hạn (accountNonExpired)
+                true,          // thông tin xác thực chưa hết hạn (credentialsNonExpired)
+                true,          // tài khoản không bị khóa (accountNonLocked)
                 List.of(new SimpleGrantedAuthority("ROLE_" + u.getRole().name()))
         );
     }

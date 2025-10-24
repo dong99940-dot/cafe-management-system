@@ -9,7 +9,6 @@ function OrderHistory() {
   const navigate = useNavigate();
   const [activeTable, setActiveTable] = useState(null);
 
-  // 🔹 Kiểm tra user có bàn đang phục vụ không
   useEffect(() => {
     const checkActiveTable = async () => {
       try {
@@ -24,7 +23,6 @@ function OrderHistory() {
     checkActiveTable();
   }, []);
 
-  // 🔹 Lấy lịch sử đơn hàng
   useEffect(() => {
     if (!email) return;
     axiosClient
@@ -33,7 +31,6 @@ function OrderHistory() {
       .catch((err) => console.error("Lỗi khi tải lịch sử đơn hàng:", err));
   }, [email]);
 
-  // 🔹 Điều hướng đến bàn đang phục vụ
   const handleViewCurrentOrder = () => {
     if (activeTable) {
       navigate(`/my-order?table=${activeTable}`);
@@ -42,7 +39,6 @@ function OrderHistory() {
     }
   };
 
-  // 🔹 Đăng xuất
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");

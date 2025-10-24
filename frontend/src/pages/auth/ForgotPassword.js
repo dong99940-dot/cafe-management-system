@@ -19,7 +19,7 @@ function ForgotPassword() {
     try {
       const res = await axiosClient.post("/auth/forgot-password", { email });
       setMessage("✅ Liên kết đặt lại mật khẩu đã được gửi đến email của bạn!");
-      setEmail(""); // Xóa input sau khi gửi
+      setEmail("");
       setTimeout(() => navigate("/login"), 4000);
     } catch (err) {
       console.error(err);

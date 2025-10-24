@@ -7,7 +7,6 @@ function Orders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [filterTable, setFilterTable] = useState("");
 
-  // 🔹 Lấy danh sách đơn hàng
   const fetchOrders = async () => {
     try {
       const url = filterTable
@@ -15,7 +14,6 @@ function Orders() {
         : "/api/orders";
       const res = await axiosClient.get(url);
 
-      // Sắp xếp theo thời gian tạo mới nhất
       const sortedOrders = [...res.data].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );

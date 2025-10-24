@@ -11,7 +11,6 @@ function AdminLayout() {
 
   return (
     <div className="d-flex vh-100">
-      {/* Sidebar */}
       <div className="bg-dark text-white p-3" style={{ width: "240px" }}>
         <h4 className="fw-bold mb-4 text-center">LTW2 Admin</h4>
         <ul className="nav flex-column">
@@ -59,7 +58,7 @@ function AdminLayout() {
           <h5 className="mb-0">Trang quản trị</h5>
         </div>
         <div className="p-4" style={{ overflowY: "auto", height: "calc(100% - 60px)" }}>
-          <Outlet /> {/* Hiển thị trang con */}
+          <Outlet /> 
         </div>
       </div>
     </div>

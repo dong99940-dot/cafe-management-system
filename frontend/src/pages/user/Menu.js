@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 function Menu() {
   const [tables, setTables] = useState([]);
   const [products, setProducts] = useState([]);
-  const [bestSellers, setBestSellers] = useState([]); // 🔥 danh sách món bán chạy
+  const [bestSellers, setBestSellers] = useState([]);
   const [selectedTable, setSelectedTable] = useState(null);
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
 
   const email = localStorage.getItem("email");
 
-  // 🔹 Kiểm tra token và tài khoản
   useEffect(() => {
     const checkAccount = async () => {
       try {
@@ -29,7 +28,6 @@ function Menu() {
     checkAccount();
   }, [navigate]);
 
-  // 🔹 Kiểm tra user có bàn đang phục vụ không
   useEffect(() => {
     const checkMyActiveTable = async () => {
       try {
@@ -42,12 +40,11 @@ function Menu() {
       } catch (err) {
         console.error("Lỗi khi kiểm tra bàn:", err);
       }
-      fetchData(); // chỉ tải dữ liệu nếu user không có bàn
+      fetchData();
     };
     checkMyActiveTable();
   }, [navigate]);
 
-  // 🔹 Lấy bàn trống + menu + best seller
   const fetchData = async () => {
     try {
       const [t, p, b] = await Promise.all([
@@ -63,7 +60,6 @@ function Menu() {
     }
   };
 
-  // 🔹 Thêm món
   const addToCart = (product) => {
     const exists = cart.find((item) => item.productId === product.id);
     if (exists) {
@@ -88,7 +84,6 @@ function Menu() {
     }
   };
 
-  // 🔹 Giảm món
   const decreaseQuantity = (id) => {
     setCart(
       cart
@@ -99,15 +94,12 @@ function Menu() {
     );
   };
 
-  // 🔹 Xóa món
   const removeFromCart = (id) => {
     setCart(cart.filter((i) => i.productId !== id));
   };
 
-  // 🔹 Tính tổng
   const totalPrice = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
-  // 🔹 Đặt món
   const handleOrder = async () => {
     if (!selectedTable) {
       alert("❗ Vui lòng chọn bàn trước khi đặt món!");

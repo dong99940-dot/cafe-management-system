@@ -23,7 +23,6 @@ public class ReportController {
         this.tableRepo = tableRepo;
     }
 
-    // 🔹 1. Thống kê trong ngày (today)
     @GetMapping("/today")
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public Map<String, Object> getTodayReport() {
@@ -48,12 +47,11 @@ public class ReportController {
         report.put("totalRevenue", totalRevenue);
         report.put("totalOrders", totalOrders);
         report.put("servedTables", servedTables);
-        report.put("customers", totalOrders); // 1 đơn hàng ≈ 1 lượt khách
+        report.put("customers", totalOrders); 
 
         return report;
     }
 
-    // 🔹 2. Thống kê trong tháng (month)
     @GetMapping("/month")
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public Map<String, Object> getMonthlyReport() {
@@ -95,7 +93,6 @@ public class ReportController {
             }
         }
 
-        // Sắp xếp theo số lượng bán giảm dần
         return stats.values().stream()
                 .sorted((a, b) -> ((int) b.get("sold")) - ((int) a.get("sold")))
                 .limit(limit)

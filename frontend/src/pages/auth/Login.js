@@ -10,7 +10,7 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // reset lỗi cũ
+    setError("");
     try {
       const res = await axiosClient.post("/auth/login", { email, password });
       localStorage.setItem("token", res.data.token);
@@ -63,7 +63,6 @@ function Login() {
             />
           </div>
           
-          {/* Liên kết Quên mật khẩu mới được thêm */}
           <div className="text-end mb-3">
             <span
               className="text-muted small"
@@ -74,7 +73,6 @@ function Login() {
               Quên mật khẩu?
             </span>
           </div>
-          {/* Kết thúc liên kết Quên mật khẩu */}
 
           {error && (
             <div className="alert alert-danger py-2 text-center small mb-3">

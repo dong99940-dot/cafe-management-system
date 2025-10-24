@@ -23,7 +23,6 @@ public class TableController {
         this.jwtUtil = jwtUtil;
     }
 
-    // 🔹 1. Admin tạo bàn mới
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public TableEntity createTable(@RequestBody TableEntity table) {
@@ -34,19 +33,16 @@ public class TableController {
         return tableRepo.save(table);
     }
 
-    // 🔹 2. Xem tất cả bàn
     @GetMapping
     public List<TableEntity> getAllTables() {
         return tableRepo.findAll();
     }
 
-    // 🔹 3. Xem bàn trống
     @GetMapping("/available")
     public List<TableEntity> getAvailableTables() {
         return tableRepo.findByStatus("TRONG");
     }
 
-    // 🔹 4. Khách hàng đặt bàn (ràng buộc 1 user chỉ có 1 bàn đang phục vụ)
     @PutMapping("/reserve/{tableNumber}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> reserveTable(
@@ -56,7 +52,6 @@ public class TableController {
         String token = authHeader.substring(7);
         String email = jwtUtil.getSubject(token);
 
-        // Kiểm tra user có bàn đang hoạt động không
         boolean hasActive = tableRepo.existsByReservedByAndStatusIn(
                 email, List.of("PHUC_VU", "DANG_SU_DUNG"));
         if (hasActive) {
@@ -81,7 +76,6 @@ public class TableController {
         return ResponseEntity.ok(table);
     }
 
-    // 🔹 5. Admin cập nhật trạng thái bàn
     @PutMapping("/update-status/{tableNumber}")
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public ResponseEntity<?> updateStatus(
@@ -96,14 +90,13 @@ public class TableController {
 
         table.setStatus(status);
         if ("DA_THANH_TOAN".equals(status)) {
-            table.setReservedBy(null); // reset để user có thể đặt lại
+            table.setReservedBy(null); 
         }
         tableRepo.save(table);
 
         return ResponseEntity.ok(table);
     }
 
-    // 🔹 6. Xoá bàn
     @DeleteMapping("/{tableNumber}")
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public ResponseEntity<?> deleteTable(@PathVariable int tableNumber) {
@@ -115,8 +108,7 @@ public class TableController {
         tableRepo.delete(table);
         return ResponseEntity.ok(Map.of("message", "Đã xoá bàn số " + tableNumber));
     }
-
-    // 🔹 7. User xem bàn đang hoạt động (để chặn đặt thêm)
+    
     @GetMapping("/my-active")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getMyActiveTable(@RequestHeader("Authorization") String authHeader) {

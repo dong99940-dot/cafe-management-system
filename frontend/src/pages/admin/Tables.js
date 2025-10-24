@@ -13,7 +13,6 @@ function Tables() {
     reservedBy: ""
   });
 
-  // 🔹 Lấy danh sách bàn
   const fetchTables = async () => {
     try {
       const res = await axiosClient.get("/api/tables");
@@ -27,14 +26,12 @@ function Tables() {
     fetchTables();
   }, []);
 
-  // 🔹 Mở modal thêm mới
   const handleAdd = () => {
     setEditingTable(null);
     setFormData({ tableNumber: 0, status: "TRONG", capacity: 4, reservedBy: "" });
     setShowModal(true);
   };
 
-  // 🔹 Mở modal chỉnh sửa
   const handleEdit = (t) => {
     setEditingTable(t);
     setFormData({ 
@@ -46,11 +43,9 @@ function Tables() {
     setShowModal(true);
   };
 
-  // 🔹 Lưu bàn (thêm mới hoặc cập nhật)
   const handleSave = async () => {
     try {
       if (editingTable) {
-        // ✅ Backend không có endpoint update toàn bộ, chỉ update status
         await axiosClient.put(
           `/api/tables/update-status/${editingTable.tableNumber}?status=${formData.status}`
         );
@@ -66,7 +61,6 @@ function Tables() {
     }
   };
 
-  // 🔹 Xoá bàn
   const handleDelete = async (tableNumber) => {
     if (window.confirm("Bạn có chắc muốn xóa bàn này không?")) {
       try {

@@ -18,13 +18,11 @@ public class AdminUserController {
     private final UserRepository userRepo;
     private final PasswordEncoder encoder;
 
-    // 🔹 Constructor thay cho @RequiredArgsConstructor
     public AdminUserController(UserRepository userRepo, PasswordEncoder encoder) {
         this.userRepo = userRepo;
         this.encoder = encoder;
     }
 
-    // 🔹 Lớp nội bộ thay cho @Data
     public static class CreateAdminReq {
         @Email
         @NotBlank
@@ -35,7 +33,6 @@ public class AdminUserController {
 
         private String fullName;
 
-        // Getters & Setters
         public String getEmail() { return email; }
         public void setEmail(String email) { this.email = email; }
 
@@ -53,7 +50,6 @@ public class AdminUserController {
             throw new RuntimeException("Email đã tồn tại");
         }
 
-        // 🔹 Tạo user admin thủ công (thay vì dùng builder của Lombok)
         User admin = new User();
         admin.setEmail(req.getEmail());
         admin.setFullName(req.getFullName());

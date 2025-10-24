@@ -7,7 +7,6 @@ function ProtectedRoute({ children, allowedRoles = [] }) {
 
   if (!token) return <Navigate to="/login" replace />;
 
-  // Nếu có danh sách role được phép, kiểm tra khớp
   if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
     return <Navigate to="/404" replace />;
   }

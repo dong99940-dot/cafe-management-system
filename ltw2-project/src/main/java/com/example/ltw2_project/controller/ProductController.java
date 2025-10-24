@@ -18,31 +18,26 @@ public class ProductController {
         this.repo = repo;
     }
 
-    // 🔹 1. Lấy tất cả sản phẩm (ai cũng xem được)
     @GetMapping
     public List<Product> getAll() {
         return repo.findAll();
     }
 
-    // 🔹 2. Lấy sản phẩm theo ID
     @GetMapping("/{id}")
     public Optional<Product> getById(@PathVariable String id) {
         return repo.findById(id);
     }
 
-    // 🔹 3. Lọc theo loại (drink/food)
     @GetMapping("/category/{cat}")
     public List<Product> byCategory(@PathVariable String cat) {
         return repo.findByCategory(cat);
     }
 
-    // 🔹 4. Tìm theo tên
     @GetMapping("/search")
     public List<Product> search(@RequestParam String q) {
         return repo.findByNameContainingIgnoreCase(q);
     }
 
-    // 🔹 5. Thêm sản phẩm (chỉ ADMIN hoặc ROOT)
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public Product add(@RequestBody Product p) {
@@ -50,7 +45,6 @@ public class ProductController {
         return repo.save(p);
     }
 
-    // 🔹 6. Cập nhật sản phẩm
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public Product update(@PathVariable String id, @RequestBody Product p) {
@@ -63,7 +57,6 @@ public class ProductController {
         return repo.save(existing);
     }
 
-    // 🔹 7. Xoá sản phẩm
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','ROOT')")
     public String delete(@PathVariable String id) {

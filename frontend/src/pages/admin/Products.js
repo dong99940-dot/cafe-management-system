@@ -14,7 +14,6 @@ function Products() {
     available: true,
   });
 
-  // 🔹 Lấy danh sách sản phẩm
   const fetchProducts = async () => {
     try {
       const res = await axiosClient.get("/api/products");
@@ -28,21 +27,18 @@ function Products() {
     fetchProducts();
   }, []);
 
-  // 🔹 Mở modal thêm mới
   const handleAdd = () => {
     setEditingProduct(null);
     setFormData({ name: "", category: "", price: "", imageUrl: "", available: true });
     setShowModal(true);
   };
 
-  // 🔹 Mở modal chỉnh sửa
   const handleEdit = (p) => {
     setEditingProduct(p);
     setFormData({ ...p });
     setShowModal(true);
   };
 
-  // 🔹 Lưu (thêm mới hoặc cập nhật)
   const handleSave = async () => {
     try {
       if (editingProduct) {
@@ -58,7 +54,6 @@ function Products() {
     }
   };
 
-  // 🔹 Xoá sản phẩm
   const handleDelete = async (id) => {
     if (window.confirm("Bạn chắc chắn muốn xoá món này?")) {
       try {

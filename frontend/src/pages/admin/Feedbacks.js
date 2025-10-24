@@ -26,9 +26,9 @@ function Feedbacks() {
       setReply("");
       setSelected(null);
       fetchFeedbacks();
-      alert("✅ Đã phản hồi khách hàng!");
+      alert("Đã phản hồi khách hàng!");
     } catch {
-      alert("❌ Lỗi khi gửi phản hồi!");
+      alert("Lỗi khi gửi phản hồi!");
     }
   };
 

@@ -28,7 +28,6 @@ public class AuthController {
         this.jwt = jwt;
     }
 
-    // ✅ Đăng ký user mới
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest req) {
         if (userRepo.existsByEmail(req.getEmail())) {
@@ -51,7 +50,6 @@ public class AuthController {
         return ResponseEntity.ok(new AuthResponse(token, u.getEmail(), u.getRole(), u.getFullName()));
     }
 
-    // ✅ Đăng nhập user
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest req) {
         try {
@@ -90,7 +88,6 @@ public class AuthController {
             User u = userRepo.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng"));
 
-            // ⚠️ Nếu tài khoản bị khóa
             if (!u.isActive()) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body(Map.of("error", "Tài khoản của bạn đã bị khóa"));

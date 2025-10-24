@@ -24,7 +24,6 @@ function Register() {
     setError("");
     setSuccess("");
 
-    // ✅ Kiểm tra đơn giản trước khi gửi
     if (!form.fullName || !form.email || !form.password) {
       setError("Vui lòng nhập đầy đủ thông tin!");
       return;
