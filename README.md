@@ -1,4 +1,5 @@
 🍽️ HỆ THỐNG QUẢN LÝ VÀ ĐẶT HÀNG F&B
+
 📌 Tóm Tắt Dự Án (Project Overview)
 Đây là giải pháp Full-stack toàn diện được thiết kế để số hóa quy trình vận hành của một nhà hàng, quán cà phê hoặc dịch vụ giao hàng. Hệ thống hỗ trợ quản lý menu, xử lý đơn hàng, đặt bàn trực tuyến và cung cấp bảng điều khiển (dashboard) báo cáo chi tiết cho chủ sở hữu, nhằm tối ưu hóa hoạt động và nâng cao trải nghiệm khách hàng.
 
