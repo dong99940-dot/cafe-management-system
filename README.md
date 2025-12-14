@@ -27,14 +27,9 @@ Quản lý Người dùng: Phân quyền truy cập cho các vai trò khác nhau
 
 🛠️ Công Nghệ Sử Dụng (Tech Stack)
 
-Lĩnh vực,Công nghệ,Chi tiết
-Front-end,[Ví dụ: Next.js/ReactJS],"Xây dựng giao diện hiện đại, tối ưu hóa SEO (Next.js)."
-,[Ví dụ: Tailwind CSS/Ant Design],Thiết kế giao diện phản hồi (Responsive) và thân thiện với người dùng.
-Back-end,[Ví dụ: Node.js (Express)],"API Server hiệu suất cao, sử dụng JavaScript."
-,[Ví dụ: Socket.IO],Cập nhật trạng thái đơn hàng theo thời gian thực.
-Database,[Ví dụ: PostgreSQL/MySQL],"Cơ sở dữ liệu quan hệ, đảm bảo tính nhất quán giao dịch."
-Lưu trữ,[Ví dụ: Cloudinary/S3],Lưu trữ hình ảnh sản phẩm.
-Deployment,"[Ví dụ: Vercel, Heroku/AWS EC2]",Triển khai ứng dụng.
+Frontend: Reactjs
+Backend: Spring Boot
+Database: MongoDB
 
 🚀 Hướng Dẫn Cài Đặt và Vận hành (Getting Started)
 
